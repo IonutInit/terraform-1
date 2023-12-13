@@ -1,23 +1,7 @@
 {
-    "key_name": "aws1",
-    "availability_zones": ["eu-west-2a", "eu-west-2b", "eu-west-2c"],
-    "ssh_allowed_ips": ["94.196.132.229/32"],
-    "custom_ingress_ports": ["3000"],
-    "services": [
-        {
-            "name": "lighting",
-            "git": "github.com/northcoders/ce-project-lights.git",
-            "instance_count": 2
-        },
-        {
-            "name": "heating",
-            "git": "github.com/northcoders/ce-project-heating.git",
-            "instance_count": 3
-        },
-        {
-            "name": "status",
-            "git": "github.com/northcoders/ce-project-status.git",
-            "instance_count": 2
-        }
-    ]
+    "key_name": "",
+    "availability_zones": [],
+    "ssh_allowed_ips": [],
+    "custom_ingress_ports": [],
+    "services": []
 }
