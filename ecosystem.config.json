@@ -1,0 +1,21 @@
+{
+    "apps": 
+      [
+        {
+            "name": "service",
+            "script": "listen.js",
+            "args": "start",
+            "instances": 2,
+            "exec_mode": "cluster",
+            "watch": "true",
+            "log_date_format": "YYYY-MM-DD HH:mm:ss",
+            "error_file": "/home/ubuntu//logs/err.log",
+            "out_file": "/home/ubuntu/logs/out.log",
+            "min_uptime": "60s",
+            "listen_timeout": 8000,
+            "max_restarts": 10,
+            "restart_delay": 5000,
+            "autorestart": true
+        }
+      ]
+    }

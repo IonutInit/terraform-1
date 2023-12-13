@@ -1,0 +1,28 @@
+---
+
+- name: Setup EC2 instances
+  hosts: all
+  become: true
+  vars: 
+    git_username: IonutInit
+    git_token: "{{ lookup('file', '../.git_token') | trim }}"
+
+  pre_tasks:
+    - name: Update cache
+      apt:
+        update_cache: true
+
+  tasks:
+    - name: Load services
+      set_fact:
+        services: "{{ lookup('file', '../config.json') | from_json}}"
+
+    - name: Install node 
+      import_tasks: tasks/node.yml 
+
+    - name: Setup individual services 
+      include_tasks: tasks/setup_service.yml
+      when: inventory_hostname in groups[service.name]
+      loop: "{{ services.services }}"
+      loop_control:
+        loop_var: service

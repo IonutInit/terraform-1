@@ -1,0 +1,38 @@
+- name: Setup individual services
+  set_fact:
+    services: "{{ lookup('file', '../config.json') | from_json }}"
+
+- name: Define target folder
+  set_fact:
+    target: "/home/ubuntu/{{ service.name }}"
+
+- name: Clone repo
+  git: 
+    repo: "https://{{ git_username }}:{{ git_token }}@{{ service.git }}"
+    dest: "{{ target }}"
+    clone: yes
+    update: yes
+  become: false
+  become_user: ubuntu
+
+- name: Copy secrets file
+  copy:
+    src: files/.env.local
+    dest: "{{ target }}/.env.local"
+
+- name: Copy ecosystem file
+  copy: 
+    src: ../ecosystem.config.json
+    dest: "{{ target }}/ecosystem.config.json"
+
+- name: Run npm
+  command:
+    cmd: npm install
+    chdir: "{{ target }}"
+
+- name: Start app
+  command: 
+    cmd: pm2 start ecosystem.config.json
+    chdir: "{{ target }}"
+  become: false
+  become_user: ubuntu
